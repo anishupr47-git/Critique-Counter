@@ -19,7 +19,10 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from analyzer.views import EssayViewSet
 
+router = DefaultRouter()
+router.register(r'essays', EssayViewSet, basename='essay')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('router.urls')),
+    path('api/', include(router.urls)),
 ]

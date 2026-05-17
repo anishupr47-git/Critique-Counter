@@ -25,7 +25,7 @@ class EssayMetricSerializer(serializers.ModelSerializer):
 
 class EssaySerialzer(serializers.ModelSerializer):
     """main serializer for Essay model, includes nested category and metrics"""
-    metrics = EssayMetricSnapshot(read_only=True)
+    metrics = serializers.SerializerMethodField()
     category_detail= EssayCategorySerializer(source='category', read_only=True)
     excerpt = serializers.SerializerMethodField()
 
