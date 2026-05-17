@@ -23,7 +23,7 @@ class ReadabilityProcessor:
         except Exception:
             return self._empty_result()
         
-        def _empty_result(self):
+    def _empty_result(self):
             return {
                 'word_count':0,
                 'sentence_count':0,
