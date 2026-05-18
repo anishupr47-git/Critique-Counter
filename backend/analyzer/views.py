@@ -39,7 +39,7 @@ class EssayViewSet(viewsets.ModelViewSet):
     def historical_trends(self,request):
         """returns the last 20 metric tracking points for the most recent essays"""
         limit = int(request.query_params.get('limit', 20))
-        essays = self.queryset()[:limit]
+        essays = self.get_queryset()[:limit]
 
         timeline = []
         for essay in reversed(essays):
