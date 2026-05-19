@@ -7,7 +7,8 @@ class TextCleaner:
         self.markdown_re = re.compile(r'[*_#~`>|-]')
         self.url_re = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
         self.email_re= re.compile(r'[\w\.-]+@[\w\.-]+')
-        self.special_char_re = re.compile(r'[^\s+')
+        self.special_char_re = re.compile(r'[^\w\s.,;:!?\'"()\[\]-]')
+        self.multiple_spaces_re = re.compile(r'\s+')
     
     def normalize_unicode(self, text):
         """Normalize unicode characters to their closest ASCII representation"""

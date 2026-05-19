@@ -3,6 +3,7 @@ venv/
 .venv/
 __pycache__/
 *.pyc
+*.zip
 db.sqlite3
 .pytest_cache/
 

@@ -1,5 +1,4 @@
 import spacy
-import spacy.cli
 from .preprocessors import TextCleaner
 from .metrics import ReadabilityProcessor, LexicalComplexityProcessor, StylisticProcessor
 import logging
@@ -18,9 +17,9 @@ class TextEvaluationPipeline:
             self.nlp = spacy.load("en_core_web_sm")
 
         except OSError:
-            logger.info("spaCy model 'en_core_web_sm' not found. Attempting to download...")
-            spacy.cli.download("en_core_web_sm")
-            self.nlp = spacy.load("en_core_web_sm")
+            logger.warning("spaCy model 'en_core_web_sm' not found. Falling back to a blank English pipeline.")
+            self.nlp = spacy.blank("en")
+            self.nlp.add_pipe("sentencizer")
 
         self.transition_words = {
             'addition': ['additionally', 'furthermore', 'moreover', 'also', 'in addition'],
@@ -49,8 +48,8 @@ class TextEvaluationPipeline:
         doc = self.nlp(clean_text)
         words = [token.text for token in doc if token.is_alpha]
 
-        readability_metrics = self.readability.process(clean_text)
-        lexical_metrics = self.lexical.process(clean_text, words)
+        readability_metrics = self.readability_processor.process(clean_text)
+        lexical_metrics = self.lexical_processor.process(clean_text, words)
         stylistic_metrics = self.stylistic.process(readability_metrics)
         
         word_count = readability_metrics.get('word_count')
@@ -59,10 +58,12 @@ class TextEvaluationPipeline:
 
         transition_count=0
         text_lower = clean_text.lower()
-        for tw in self.transition_words:
-            transition_count += text_lower.count(tw)
+        for words_for_category in self.transition_words.values():
+            for transition_word in words_for_category:
+                transition_count += text_lower.count(transition_word)
 
         cohesion_score = transition_count / max(1, word_count)
+        passive_voice_percentage = (passive_count / max(1, word_count)) * 100.0
 
         structural_fixes = []
 
@@ -76,13 +77,31 @@ class TextEvaluationPipeline:
         return {
             **readability_metrics,
             **lexical_metrics,
-            **self.stylistic_metrics,
+            **stylistic_metrics,
             'cohesion_score': round(cohesion_score, 4),
-            'passive_voice_count': passive_count,
-            'structural_fixes': structural_fixes,
+            'passive_voice_percentage': round(passive_voice_percentage, 2),
+            'structural_feedback': structural_fixes,
+            'overall_score': self._overall_score(readability_metrics, lexical_metrics, structural_fixes),
         }
+
+    def _overall_score(self, readability_metrics, lexical_metrics, structural_fixes):
+        """Produces a stable 0-100 score from the existing metrics."""
+        reading_ease = readability_metrics.get('reading_ease', 0.0)
+        vocab_complexity = lexical_metrics.get('vocab_complexity', 0.0)
+        score = 70.0
+
+        if 50 <= reading_ease <= 80:
+            score += 10
+        elif reading_ease < 30 or reading_ease > 90:
+            score -= 8
+
+        score += min(10.0, vocab_complexity / 10.0)
+        score -= len(structural_fixes) * 4
+        return round(max(0.0, min(100.0, score)), 2)
+
     def _generate_feedback(self, structural_fixes, word_count, target_words, transition_count, passive_count, readability_metrics, doc):
         """Helper method to generate actionable feedback based on metrics"""
+        target_words = target_words or 0
         if target_words > 0:
             deviation = abs(word_count - target_words) / target_words
             if deviation > 0.2:

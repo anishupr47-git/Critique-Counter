@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%fua6b%ei#0pke&2n$l&vj@8o2d4ji8!!s33h*j-_xpq8tzlx!'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY','django-insecure-critique-counter-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG','FALSE').lower()=='true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv(
+    'DJANGO_ALLOWED_HOSTS',
+    'localhost,127.0.0.1,testserver,api.uprlabs.com,critique.uprlabs.com,uprlabs.com',
+).split(',')
 
 
 # Application definition
@@ -127,7 +130,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    'DEFAUL_THROTTLE_CLASSES':[
+    'DEFAULT_THROTTLE_CLASSES':[
         'rest_framework.throttling.AnonRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
@@ -139,6 +142,39 @@ if DEBUG:
 else:
     CORS_ALLOW_ALL_ORIGINS = False
     CORS_ALLOWED_ORIGINS = [
+
+        "https://uprlabs.com",
+        "https://critique.uprlabs.com",
         "http://localhost:3000",
-        "http://192.168.10.80:3000",
+        "http://127.0.0.1:3000",
     ]
+    extra_origins= os.getenv('CORS_ALLOWED_ORIGINS', '')
+    if extra_origins:
+        CORS_ALLOWED_ORIGINS.extend(extra_origins.split(','))
+
+
+CSRF_TRUSTED_ORIGINS = [
+        "https://uprlabs.com",
+        "https://critique.uprlabs.com",
+]
+extra_csrf = os.getenv('CSRF_TRUSTED_ORIGINS','')
+if extra_csrf:
+    CSRF_TRUSTED_ORIGINS.extend(extra_csrf.split(','))
+CORS_ALLOW_CREDENTIALS= True
+
+CORS_ALLOW_METHODS = [
+        "DELETE",
+        "GET",
+        "OPTIONS",
+        "PATCH",
+        "POST",
+        "PUT",
+    ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = os.getenv('DJANGO_SECURE_SSL_REDIRECT', 'FALSE').lower() == 'true'
+SESSION_COOKIE_SECURE = os.getenv('DJANGO_SESSION_COOKIE_SECURE', str(not DEBUG)).lower() == 'true'
+CSRF_COOKIE_SECURE = os.getenv('DJANGO_CSRF_COOKIE_SECURE', str(not DEBUG)).lower() == 'true'
+SECURE_HSTS_SECONDS = int(os.getenv('DJANGO_SECURE_HSTS_SECONDS', '0'))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = os.getenv('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', 'FALSE').lower() == 'true'
+SECURE_HSTS_PRELOAD = os.getenv('DJANGO_SECURE_HSTS_PRELOAD', 'FALSE').lower() == 'true'

@@ -23,21 +23,23 @@ class EssayMetricSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = fields
 
-class EssaySerialzer(serializers.ModelSerializer):
+class EssaySerializer(serializers.ModelSerializer):
     """main serializer for Essay model, includes nested category and metrics"""
-    metrics = serializers.SerializerMethodField()
+    metrics = EssayMetricSerializer(read_only=True)
     category_detail= EssayCategorySerializer(source='category', read_only=True)
     excerpt = serializers.SerializerMethodField()
 
     class Meta:
         model= Essay
         fields = [
-            'id','word_count','sentence_count','character_count','syllable_count',
-            'grade_level','reading_ease', 'vocab_complexity', 'lexical_diversity',
-            'cohesion_score', 'passive_voice_percentage', 'avg_sentence_length', 'avg_word_length',
-            'structural_feedback', 'overall_score', 'processed_at',
+            'id', 'title', 'prompt', 'body_text', 'target_words', 'author_tag',
+            'status', 'category', 'category_detail', 'language', 'created_at',
+            'updated_at', 'metrics', 'excerpt',
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at', 'metrics']
+        read_only_fields = [
+            'id', 'created_at', 'updated_at', 'metrics', 'category_detail',
+            'excerpt',
+        ]
 
     def get_excerpt(self, obj):
         """returns the excerpt of the essay for preview purposes"""
@@ -45,7 +47,8 @@ class EssaySerialzer(serializers.ModelSerializer):
     
     def validate_title(self, value):
         """ensure the title is reasonable"""
-        if len(value.strip()) < 3:
+        value = value.strip()
+        if len(value) < 3:
             raise serializers.ValidationError("Title must be at least 3 characters long.")
         return value 
     
@@ -65,7 +68,7 @@ class EssaySerialzer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         """custom create method to handle essay creation and metric calculation"""
-        logger.info(f"Creating essay with title: {validated_data.get('title')}")
+        logger.info("Creating essay with title: %s", validated_data.get('title'))
 
         #create the core essay instance
         essay = Essay.objects.create(**validated_data)
@@ -77,7 +80,7 @@ class EssaySerialzer(serializers.ModelSerializer):
                 target_words=essay.target_words
             )
 
-            metrics= EssayMetricSnapshot.objects.create(
+            EssayMetricSnapshot.objects.create(
                 essay= essay,
                 word_count= results.get('word_count', 0),
                 sentence_count= results.get('sentence_count', 0),
@@ -94,12 +97,27 @@ class EssaySerialzer(serializers.ModelSerializer):
                 structural_feedback= results.get('structural_feedback', []),
                 overall_score= results.get('overall_score', 0.0)
             )
-            metrics.save()
 
-            logger.info(f"Metrics calculated and saved for essay id: {essay.id}")
+            logger.info("Metrics calculated and saved for essay id: %s", essay.id)
 
         except Exception as e:
-            logger.error(f"Error processing essay id {essay.id}: {str(e)}")
+            logger.exception("Error processing essay id %s: %s", essay.id, e)
+            EssayMetricSnapshot.objects.get_or_create(
+                essay=essay,
+                defaults={
+                    'word_count': len(essay.body_text.split()),
+                    'structural_feedback': [{
+                        'type': 'Processing Warning',
+                        'severity': 'medium',
+                        'message': 'The essay was saved, but automatic metrics could not be generated.'
+                    }],
+                    'overall_score': 0.0,
+                },
+            )
 
         return essay
+
+
+# Keep the original typo as an alias so existing imports continue to work.
+EssaySerialzer = EssaySerializer
 

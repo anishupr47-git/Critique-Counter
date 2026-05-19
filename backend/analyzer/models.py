@@ -93,12 +93,12 @@ class EssayMetricSnapshot(models.Model):
         """Example method to calculate overall score based on metrics"""
         base_score = 70.0
         #reward good reading
-        if 50<- self.reading_ease <= 80:
+        if 50 <= self.reading_ease <= 80:
             base_score += 10
         #reward vocab complexity
-        base_score += min(10, self.vocab_complexity/5)
+        base_score += min(10, self.vocab_complexity / 10)
         #penalize
-        penalty = len(self.structural_fixes)*2
+        penalty = len(self.structural_feedback) * 2
 
         final_score = max(0.0, min(100.0, base_score - penalty))
         return final_score
