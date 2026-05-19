@@ -1,20 +1,38 @@
-## CritiqueCounter
+#  CritiqueCounter: Your Awesome Essay Helper!
 
-CritiqueCounter is a comprehensive Full-Stack Automated Essay Grader, NLP Structural Reviewer, and Analytics Dashboard. It leverages a decoupled architecture via a Django REST Framerwork (DRF) backend and a React (JSX) frontend, providin real-time natural language processing evaluations and an interactive workspace interface.
+CritiqueCounter is a super smart tool that reads your essays and gives you cool tips to make your writing amazing! It's like having a friendly writing coach inside your computer.
 
-## System Architecture
-* **Backend:** Django, Django REST Framework, SQLite.
-* **NLP Pipeline:** Pure Python nlp engine package
-wrapping (en_core_web_sm), scikit-learn (vectorization), and textstat (readability heuristics).
+---
 
- ##  What does it do?
- When you send your essay to this program, it reads through the text very fast and check these things:
+##  What does it do?
 
- * **Word Count:** It counts how many words you wrote. It checks if you wrote enough to reach your goal.
- * **Sentence Check:** It checks if your sentences are too long. Sentences with too many words are hard to read.
- * **Easy to Read:** It looks at your words and tells you what school grade level can understand your essay.
- * **Joining Words:** It checks if you sued nice joining words (like *however*,*also*)to help your writing flow smoothly
+When you give CritiqueCounter your essay, it reads through your text in a flash and checks these things:
 
- ## What is done today?
+* ** Word Counter:** It counts how many words you wrote. It lets you know if you reached your writing goal!
+* ** Sentence Tester:** It checks if your sentences are too long. Super long sentences can tire out your readers!
+* ** School Level:** It reads your writing and tells you what school grade level can understand your essay.
+* ** Linking Words:** It looks for awesome joining words (like *however*, *also*, and *furthermore*) that help your story flow like a river.
+* ** Strong Sentences:** It spots "weak" or passive sentences (like "the ball was kicked by the boy") and helps you change them to strong active sentences ("the boy kicked the ball!").
 
- Web App setup is completed today and alongside with that backend DJANGO(DRF) code is checked and reviewed and NLP engine analyzer code is also reviewed and checked and done today.
+---
+
+##  Cool Features You Will See On Screen
+
+1. ** The Writing Page:** Type in your title, set your word goal, add your name tag, and write your essay!
+2. ** The Progress Chart:** A beautiful, colorful line graph that shows how your vocabulary and grade levels grow over time!
+3. ** The History Log:** A neat list that keeps all your past essays safe so you can look at them whenever you want.
+4. ** The Bento Box:** A neat, organized grid that pops up to show your Grade Level, how easy your essay is to read, and your vocabulary score!
+5. ** The Writing Review:** A special panel that highlights sentences you can polish to make your writing shine like a star.
+
+---
+
+##  How to set it up on your computer
+
+Follow these simple steps to make the magic work:
+
+### 1. Wake up the Backend (The Secret Brain)
+Open your terminal window inside the `backend` folder and type these commands:
+
+* **Turn on the program's virtual box:**
+  ```powershell
+  .\venv\Scripts\Activate.ps1
