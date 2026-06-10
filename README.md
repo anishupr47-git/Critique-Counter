@@ -7,9 +7,13 @@ When you give CritiqueCounter your essay, it reads through your text in a flash 
 ##)Cool Features You Will See On Screen
 
 .)The Writing Page: A dedicated space where you can type in your title, set your target word goal, add your personalized name tag, and draft your essay.
+
 .)The Progress Chart: A colorful line graph that tracks your writing journey over time, showing you exactly how your vocabulary and reading levels grow with each new essay.
+
 .)The History Log: A neat, secure list that keeps all your past essays safe so you can look back at them whenever you want to see how much you have improved.
+
 .)The Bento Box: A clean, organized grid dashboard that pops up to give you an instant snapshot of your grade level, reading ease, and overall vocabulary score.
+
 .)The Writing Review: A helpful side panel that highlights specific sentences in your draft, giving you clear suggestions on which spots you can polish to make your writing shine like a star.
 
 
