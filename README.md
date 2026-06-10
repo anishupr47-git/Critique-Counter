@@ -1,38 +1,18 @@
-#  CritiqueCounter: Your Awesome Essay Helper!
+CritiqueCounter: Your Awesome Essay Helper!
+CritiqueCounter is a super smart tool that reads your essays and gives you cool tips to make your writing amazing! It is like having a friendly writing coach inside your computer.
 
-CritiqueCounter is a super smart tool that reads your essays and gives you cool tips to make your writing amazing! It's like having a friendly writing coach inside your computer.
+When you give CritiqueCounter your essay, it reads through your text in a flash to check your overall word count and make sure you are hitting your specific writing goals. It also runs a sentence tester to spot lines that are running a bit too long, which is helpful because super long sentences can easily tire out your readers. On top of that, it analyzes your text to figure out the school grade level of your writing, tracks your use of smooth linking words like however, also, and furthermore, and flags passive sentences so you can flip them into strong, active ones.
 
----
+Cool Features You Will See On Screen
+The Writing Page: A dedicated space where you can type in your title, set your target word goal, add your personalized name tag, and draft your essay.
 
-##  What does it do?
+The Progress Chart: A colorful line graph that tracks your writing journey over time, showing you exactly how your vocabulary and reading levels grow with each new essay.
 
-When you give CritiqueCounter your essay, it reads through your text in a flash and checks these things:
+The History Log: A neat, secure list that keeps all your past essays safe so you can look back at them whenever you want to see how much you have improved.
 
-* ** Word Counter:** It counts how many words you wrote. It lets you know if you reached your writing goal!
-* ** Sentence Tester:** It checks if your sentences are too long. Super long sentences can tire out your readers!
-* ** School Level:** It reads your writing and tells you what school grade level can understand your essay.
-* ** Linking Words:** It looks for awesome joining words (like *however*, *also*, and *furthermore*) that help your story flow like a river.
-* ** Strong Sentences:** It spots "weak" or passive sentences (like "the ball was kicked by the boy") and helps you change them to strong active sentences ("the boy kicked the ball!").
+The Bento Box: A clean, organized grid dashboard that pops up to give you an instant snapshot of your grade level, reading ease, and overall vocabulary score.
 
----
+The Writing Review: A helpful side panel that highlights specific sentences in your draft, giving you clear suggestions on which spots you can polish to make your writing shine like a star.
 
-##  Cool Features You Will See On Screen
-
-1. ** The Writing Page:** Type in your title, set your word goal, add your name tag, and write your essay!
-2. ** The Progress Chart:** A beautiful, colorful line graph that shows how your vocabulary and grade levels grow over time!
-3. ** The History Log:** A neat list that keeps all your past essays safe so you can look at them whenever you want.
-4. ** The Bento Box:** A neat, organized grid that pops up to show your Grade Level, how easy your essay is to read, and your vocabulary score!
-5. ** The Writing Review:** A special panel that highlights sentences you can polish to make your writing shine like a star.
-
----
-
-##  How to set it up on your computer
-
-Follow these simple steps to make the magic work:
-
-### 1. Wake up the Backend (The Secret Brain)
-Open your terminal window inside the `backend` folder and type these commands:
-
-* **Turn on the program's virtual box:**
-  ```powershell
-  .\venv\Scripts\Activate.ps1
+More About the Project
+CritiqueCounter was built to take the stress out of proofreading and editing. By combining text analysis with a clean visual dashboard, it gives you immediate feedback without making you hunt through confusing grammar menus. The backend acts as the core engine, processing your text through readability algorithms to measure complexity and flow. Meanwhile, the frontend transforms those dry numbers into a beautiful user interface, using features like the Bento Box grid and the Progress Chart to make tracking your writing skills feel like leveling up in a game. Whether you are drafting a quick story or working on a big school report, this tool helps you understand your writing habits and build better communication skills every time you type.
