@@ -1,5 +1,5 @@
-import React from 'react'
-import WorkspaceDashboard from './components/WorkspaceDashboard'
+import React from "react";
+import WorkspaceDashboard from "./components/WorkspaceDashboard";
 
 function App() {
   return (

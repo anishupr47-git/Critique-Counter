@@ -1,19 +1,23 @@
-/* Palette: Multi-tier dark workspace using slate-950 background, slate-900 panels, indigo-400 interactive highlights, and rose-500 warning states. */
-
 :root {
   --slate-950: #020617;
   --slate-900: #0f172a;
-  --slate-800: #1e293b;
-  --slate-700: #334155;
-  --slate-400: #94a3b8;
-  --slate-300: #cbd5e1;
+  --slate-800: #1e294b;
+  --slate-700: #2e3a6b;
+  --slate-400: #3e4a8b;
+  --slate-300: #4e5ab1;
   --slate-100: #f1f5f9;
-  
-  --indigo-400: #818cf8;
+
+  --indigo-400: #6366f1;
   --indigo-500: #6366f1;
   --rose-500: #f43f5e;
-  --rose-500-alpha: rgba(244, 63, 94, 0.1);
+  --rose-500-alpha: rgba(244, 63, 94, 0.5);
   --green-500: #22c55e;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
@@ -21,20 +25,27 @@ body {
   padding: 0;
   background-color: var(--slate-950);
   color: var(--slate-100);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
 }
 
 .workspace-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 20px;
   height: 100vh;
-  padding: 2rem;
   box-sizing: border-box;
   overflow: hidden;
 }
 
 .workspace-header {
-  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
 }
 
 .workspace-title {
@@ -49,10 +60,32 @@ body {
   flex: 1;
   gap: 2rem;
   overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
 }
 
-/* 3-column configuration framework */
 .left-column {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--slate-900);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--slate-800);
+  min-width: 0;
+}
+
+.middle-column {
+  flex: 2.5;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.right-column {
   flex: 2;
   display: flex;
   flex-direction: column;
@@ -60,32 +93,14 @@ body {
   border-radius: 12px;
   padding: 1.5rem;
   border: 1px solid var(--slate-800);
-}
-
-.middle-column {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
   overflow-y: auto;
+  min-width: 0;
 }
 
-.right-column {
-  flex: 1.5;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--slate-900);
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid var(--slate-800);
-  overflow-y: auto;
-}
-
-/* Form Styles */
 .editor-form {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100%
 }
 
 .form-row {
@@ -116,6 +131,8 @@ body {
   font-size: 1rem;
   transition: all 0.2s;
   outline: none;
+  width: 100%;
+  min-width: 0;
 }
 
 .input-field:focus {
@@ -147,17 +164,12 @@ body {
   background-color: var(--indigo-400);
 }
 
-.submit-btn:disabled {
-  background-color: var(--slate-700);
-  color: var(--slate-400);
-  cursor: not-allowed;
-}
-
-/* Bento Grid Dashboard Structure */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
 }
 
 .bento-tile {
@@ -181,7 +193,6 @@ body {
   color: var(--slate-100);
 }
 
-/* Serif Typography Canvas for Essay Viewing */
 .essay-canvas {
   background-color: var(--slate-900);
   border: 1px solid var(--slate-800);
@@ -195,7 +206,6 @@ body {
   flex: 1;
 }
 
-/* Warning Alerts */
 .warnings-panel {
   display: flex;
   flex-direction: column;
@@ -205,8 +215,9 @@ body {
 .warning-alert {
   background-color: var(--rose-500-alpha);
   border-left: 4px solid var(--rose-500);
+  color: var(--rose-500);
   padding: 1rem;
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
 }
@@ -223,7 +234,6 @@ body {
   font-size: 0.875rem;
 }
 
-/* Side Scrollable Ledger */
 .ledger-table {
   width: 100%;
   border-collapse: collapse;
@@ -245,11 +255,6 @@ body {
   font-size: 0.875rem;
 }
 
-.ledger-row {
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
 .ledger-row:hover td {
   color: var(--indigo-400);
 }
@@ -259,10 +264,10 @@ body {
   border: 1px solid var(--slate-800);
   border-radius: 12px;
   padding: 1.5rem;
-  height: 300px;
+  flex: 1;
+  min-height: 300px;
 }
 
-/* Back Button */
 .back-btn {
   background: none;
   border: none;
@@ -274,6 +279,31 @@ body {
   display: inline-block;
   font-weight: 600;
 }
+
 .back-btn:hover {
   color: var(--indigo-500);
+}
+
+@media (max-width: 900px) {
+  .workspace-container {
+    height: auto;
+    overflow: auto;
+  }
+
+  .workspace-content {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .left-column,
+  .middle-column,
+  .right-column {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
 }

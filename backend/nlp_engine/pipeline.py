@@ -5,21 +5,27 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+_nlp_cache = None
+
+def _get_nlp():
+    global _nlp_cache
+    if _nlp_cache is None:
+        try:
+            _nlp_cache = spacy.load("en_core_web_sm")
+        except OSError:
+            logger.warning("spaCy model 'en_core_web_sm' not found. Falling back to a blank English pipeline.")
+            _nlp_cache = spacy.blank("en")
+            _nlp_cache.add_pipe("sentencizer")
+    return _nlp_cache
+
 class TextEvaluationPipeline:
     """Pipeline to process text and calculate various metrics for essay evaluation"""
     def __init__(self):
         self.cleaner = TextCleaner()
         self.readability_processor = ReadabilityProcessor()
         self.lexical_processor = LexicalComplexityProcessor()
-        self.stylistic= StylisticProcessor()
-
-        try:
-            self.nlp = spacy.load("en_core_web_sm")
-
-        except OSError:
-            logger.warning("spaCy model 'en_core_web_sm' not found. Falling back to a blank English pipeline.")
-            self.nlp = spacy.blank("en")
-            self.nlp.add_pipe("sentencizer")
+        self.stylistic = StylisticProcessor()
+        self.nlp = _get_nlp()
 
         self.transition_words = {
             'addition': ['additionally', 'furthermore', 'moreover', 'also', 'in addition'],
@@ -33,7 +39,7 @@ class TextEvaluationPipeline:
 
     def _check_passive_voice(self, doc):
         """Detects passive voice constructions in the text"""
-        passive_count= 0
+        passive_count = 0
         for token in doc:
             if token.dep_ == 'auxpass' and token.lemma_ in self.passive_aux:
                 passive_count += 1
@@ -56,7 +62,7 @@ class TextEvaluationPipeline:
         
         passive_count = self._check_passive_voice(doc)
 
-        transition_count=0
+        transition_count = 0
         text_lower = clean_text.lower()
         for words_for_category in self.transition_words.values():
             for transition_word in words_for_category:
@@ -134,6 +140,3 @@ class TextEvaluationPipeline:
                     'severity': 'low',
                     'message': f'Sentence "{sent.text[:50]}..." is quite long with {sent_word_count} words. Consider breaking it up for better readability.'
                 })
-
-    
-
