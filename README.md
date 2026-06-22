@@ -1,9 +1,9 @@
-Your Awesome AI Writing Coach & Essay Helper
+_**Your Awesome AI Writing Coach & Essay Helper**_
 CritiqueCounter is a smart writing assistant designed to take the stress out of proofreading and editing. By combining text analysis with a clean visual dashboard, it gives you immediate feedback without making you hunt through confusing grammar menus.
 
 Whether you are drafting a quick story or working on a big school report, this tool helps you understand your writing habits and build better communication skills every time you type.
 
-#)Key Analysis Features
+_**#)Key Analysis Features**_
 When you paste your essay into CritiqueCounter, the backend engine immediately processes your text through readability algorithms to measure complexity, flow, and structure:
 
 Word Count & Goals: Checks your overall length in a flash to make sure you are hitting your specific target goals.
@@ -16,7 +16,7 @@ Flow Tracking: Tracks your use of smooth transitions and linking words like howe
 
 Voice Detector: Flags passive sentences so you can flip them into strong, active ones.
 
-#)Cool Features You Will See On Screen
+_**#)Cool Features You Will See On Screen**_
 The app takes all the boring numbers and turns them into a beautiful, fun screen. There are five main parts to look at:
 
 1. The Writing Page
@@ -34,6 +34,6 @@ A colorful line graph that tracks your writing journey over time, showing you ex
 5. The History Log
 A neat, secure list that keeps all your past essays safe so you can look back at them whenever you want to see how much you have improved.
 
-🛠️ How it Works Under the Hood
+_** How it Works Under the Hood**_
 The Engine & The Interface:
 The backend acts as the core engine, running the readability algorithms to measure text complexity. Meanwhile, the frontend brings those metrics to life, using the Bento Box grid and the Progress Chart to make tracking your writing skills feel like leveling up in a game.
