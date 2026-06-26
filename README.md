@@ -1,39 +1,30 @@
-_**Your Awesome AI Writing Coach & Essay Helper**_
-CritiqueCounter is a smart writing assistant designed to take the stress out of proofreading and editing. By combining text analysis with a clean visual dashboard, it gives you immediate feedback without making you hunt through confusing grammar menus.
+CritiqueCounter
 
-Whether you are drafting a quick story or working on a big school report, this tool helps you understand your writing habits and build better communication skills every time you type.
+CritiqueCounter makes editing easy. Instead of searching through confusing grammar menus, it checks your text instantly and shows your stats on a clean visual dashboard. Whether you are writing a short story or a school report, this tool helps you track your writing habits and become a better writer every time you type.
 
-_**#)Key Analysis Features**_
-When you paste your essay into CritiqueCounter, the backend engine immediately processes your text through readability algorithms to measure complexity, flow, and structure:
+Features
+ Key Analysis Features 
+The moment you paste your essay into CritiqueCounter, our backend engine instantly processes your text through advanced readability algorithms to analyze complexity, flow, and structure:
 
-Word Count & Goals: Checks your overall length in a flash to make sure you are hitting your specific target goals.
+Word Count & Goals: Instantly tracks your length to ensure you're hitting your specific target goals.
 
-Sentence Tester: Spots lines that are running a bit too long so you don't tire out your readers.
+Sentence Tester: Flags runaway sentences that are running too long so you don't tire out your readers.
 
-Readability Scoring: Analyzes your text to figure out the school grade level of your writing.
+Readability Scoring: Breaks down your text to calculate the exact school grade level of your writing.
 
-Flow Tracking: Tracks your use of smooth transitions and linking words like however, also, and furthermore.
+ Visual Features 
+The app turns boring raw data into a beautiful, engaging user interface. The frontend layout features five main section:
 
-Voice Detector: Flags passive sentences so you can flip them into strong, active ones.
+The Writing Page: Your dedicated, distraction-free workspace to type your title, set word goals, add your personalized name tag, and draft your piece.
 
-_**#)Cool Features You Will See On Screen**_
-The app takes all the boring numbers and turns them into a beautiful, fun screen. There are five main parts to look at:
+The Bento Box: A clean, grid-style dashboard that gives you an instant snapshot of your writing grade level, reading ease, and overall vocabulary score.
 
-1. The Writing Page
-A dedicated workspace where you can type in your title, set your target word goal, add your personalized name tag, and draft your essay.
+The Writing Review: A helpful side panel that highlights sentences directly in your draft, giving you clear suggestions on where to polish.
 
-2. The Bento Box
-A clean, organized grid dashboard that pops up to give you an instant snapshot of your grade level, reading ease, and overall vocabulary score.
+The Progress Chart: A colorful line graph that tracks your writing journey over time, showing your growth across multiple essays.
 
-3. The Writing Review
-A helpful side panel that highlights specific sentences right in your draft, giving you clear, actionable suggestions on which spots you can polish to make your writing shine.
+The History Log: A secure, local archive that keeps your past essays safe so you can always look back and see how much you've improved.
 
-4. The Progress Chart
-A colorful line graph that tracks your writing journey over time, showing you exactly how your vocabulary and reading levels grow with each new essay.
-
-5. The History Log
-A neat, secure list that keeps all your past essays safe so you can look back at them whenever you want to see how much you have improved.
-
-_** How it Works Under the Hood**_
-The Engine & The Interface:
-The backend acts as the core engine, running the readability algorithms to measure text complexity. Meanwhile, the frontend brings those metrics to life, using the Bento Box grid and the Progress Chart to make tracking your writing skills feel like leveling up in a game.
+<img width="2560" height="1299" alt="Screenshot (385)" src="https://github.com/user-attachments/assets/447b26c0-21ee-4c86-82a2-333a80822221" />
+<img width="2560" height="1293" alt="Screenshot (384)" src="https://github.com/user-attachments/assets/4cbe4806-52da-4c62-9af7-9b424b80b889" />
+<img width="2560" height="1289" alt="Screenshot (383)" src="https://github.com/user-attachments/assets/b138a7eb-31cc-4deb-972e-e5c545628888" />
