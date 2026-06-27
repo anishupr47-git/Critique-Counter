@@ -22,9 +22,10 @@ const WorkspaceDashboard = () => {
   const [history, setHistory] = useState([]);
   const [trends, setTrends] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const [title, setTitle] = useState('');
-  const [targetWords, setTargetWords] = useState('');
+  const [targetWords, setTargetWords] = useState('500');
   const [authorTag, setAuthorTag] = useState('');
   const [bodyText, setBodyText] = useState('');
 
@@ -136,6 +137,7 @@ const WorkspaceDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     try {
       const response = await fetch(`${API_BASE_URL}/essays/`, {
@@ -154,6 +156,15 @@ const WorkspaceDashboard = () => {
       if (!response.ok) {
         const errorData = await parseJsonSafe(response);
         console.error('Failed to submit essay:', response.status, errorData || response.statusText);
+        
+        let errorMsg = 'Failed to submit essay. Please check your inputs.';
+        if (errorData && typeof errorData === 'object') {
+           const messages = Object.values(errorData).flat();
+           if (messages.length > 0) {
+             errorMsg = messages.join(' ');
+           }
+        }
+        setError(errorMsg);
         return;
       }
 
@@ -181,6 +192,12 @@ const WorkspaceDashboard = () => {
   const renderStateA = () => (
     <>
       <div className="left-column">
+        {error && (
+          <div className="warning-alert" style={{ marginBottom: '1rem' }}>
+            <span className="warning-type">Validation Error</span>
+            <span className="warning-message">{error}</span>
+          </div>
+        )}
         <form className="editor-form" onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="input-group">
@@ -234,7 +251,9 @@ const WorkspaceDashboard = () => {
       <div className='middle-column'>
         <div className='chart-container' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'var(--slate-400)' }}>
           {trends.length > 0 ? (
-            <canvas ref={chartRef} style={{ width: '100%', height: '100%' }}></canvas>
+            <div style={{ position: 'relative', width: '100%', height: '100%', flex: 1 }}>
+              <canvas ref={chartRef}></canvas>
+            </div>
           ) : (
             <div style={{ padding: '2rem' }}>
               <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--slate-100)', fontSize: '1.25rem' }}>Historical Trends</h4>

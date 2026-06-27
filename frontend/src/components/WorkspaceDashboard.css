@@ -74,6 +74,7 @@ body {
   padding: 1.5rem;
   border: 1px solid var(--slate-800);
   min-width: 0;
+  overflow-y: auto;
 }
 
 .middle-column {
@@ -166,7 +167,7 @@ body {
 
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
   width: 100%;
@@ -204,6 +205,7 @@ body {
   color: var(--slate-300);
   overflow-y: auto;
   flex: 1;
+  word-wrap: break-word;
 }
 
 .warnings-panel {
@@ -237,6 +239,7 @@ body {
 .ledger-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .ledger-table th {
@@ -253,6 +256,7 @@ body {
   border-bottom: 1px solid var(--slate-800);
   color: var(--slate-300);
   font-size: 0.875rem;
+  word-break: break-word;
 }
 
 .ledger-row:hover td {
