@@ -2,10 +2,12 @@ import spacy
 from .preprocessors import TextCleaner
 from .metrics import ReadabilityProcessor, LexicalComplexityProcessor, StylisticProcessor
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
 _nlp_cache = None
+_english_vocab_cache = None
 
 def _get_nlp():
     global _nlp_cache
@@ -18,8 +20,18 @@ def _get_nlp():
             _nlp_cache.add_pipe("sentencizer")
     return _nlp_cache
 
+def _get_english_vocab():
+    global _english_vocab_cache
+    if _english_vocab_cache is None:
+        words_path = os.path.join(os.path.dirname(__file__), 'words.txt')
+        try:
+            with open(words_path, 'r', encoding='utf-8') as f:
+                _english_vocab_cache = set(w.strip().lower() for w in f)
+        except Exception:
+            _english_vocab_cache = set()
+    return _english_vocab_cache
+
 class TextEvaluationPipeline:
-    """Pipeline to process text and calculate various metrics for essay evaluation"""
     def __init__(self):
         self.cleaner = TextCleaner()
         self.readability_processor = ReadabilityProcessor()
@@ -38,7 +50,6 @@ class TextEvaluationPipeline:
         self.passive_aux = {'is', 'was', 'were', 'be', 'been', 'being', 'are'}
 
     def _check_passive_voice(self, doc):
-        """Detects passive voice constructions in the text"""
         passive_count = 0
         for token in doc:
             if token.dep_ == 'auxpass' and token.lemma_ in self.passive_aux:
@@ -46,13 +57,20 @@ class TextEvaluationPipeline:
         return passive_count
     
     def evaluate(self, text, target_words=None):
-        """Main method to process text and calculate metrics"""
         logger.info("Starting text evaluation pipeline")
 
         clean_text = self.cleaner.clean(text)
 
         doc = self.nlp(clean_text)
         words = [token.text for token in doc if token.is_alpha]
+
+        if not words:
+            return self._empty_result(False)
+
+        vocab = _get_english_vocab()
+        real_word_count = sum(1 for w in words if w.lower() in vocab)
+        if real_word_count / len(words) < 0.4:
+            return self._empty_result(True)
 
         readability_metrics = self.readability_processor.process(clean_text)
         lexical_metrics = self.lexical_processor.process(clean_text, words)
@@ -91,7 +109,6 @@ class TextEvaluationPipeline:
         }
 
     def _overall_score(self, readability_metrics, lexical_metrics, structural_fixes):
-        """Produces a stable 0-100 score from the existing metrics."""
         reading_ease = readability_metrics.get('reading_ease', 0.0)
         vocab_complexity = lexical_metrics.get('vocab_complexity', 0.0)
         score = 70.0
@@ -106,7 +123,6 @@ class TextEvaluationPipeline:
         return round(max(0.0, min(100.0, score)), 2)
 
     def _generate_feedback(self, structural_fixes, word_count, target_words, transition_count, passive_count, readability_metrics, doc):
-        """Helper method to generate actionable feedback based on metrics"""
         target_words = target_words or 0
         if target_words > 0:
             deviation = abs(word_count - target_words) / target_words
@@ -140,3 +156,31 @@ class TextEvaluationPipeline:
                     'severity': 'low',
                     'message': f'Sentence "{sent.text[:50]}..." is quite long with {sent_word_count} words. Consider breaking it up for better readability.'
                 })
+
+    def _empty_result(self, is_gibberish=False):
+        feedback = []
+        if is_gibberish:
+            feedback.append({
+                'type': 'Invalid Text',
+                'severity': 'high',
+                'message': 'Text appears to be gibberish or non-English.'
+            })
+            
+        return {
+            'word_count': 0,
+            'sentence_count': 0,
+            'character_count': 0,
+            'syllable_count': 0,
+            'grade_level': 0.0,
+            'reading_ease': 0.0,
+            'smog_index': 0.0,
+            'coleman_liau_index': 0.0,
+            'vocab_complexity': 0.0,
+            'lexical_diversity': 0.0,
+            'avg_sentence_length': 0.0,
+            'avg_word_length': 0.0,
+            'cohesion_score': 0.0,
+            'passive_voice_percentage': 0.0,
+            'structural_feedback': feedback,
+            'overall_score': 0.0,
+        }
