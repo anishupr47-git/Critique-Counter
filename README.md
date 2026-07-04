@@ -3,7 +3,7 @@
 
 CritiqueCounter makes editing easy. Instead of searching through confusing grammar menus, it checks your text instantly and shows your stats on a clean visual dashboard. Whether you are writing a short story or a school report, this tool helps you track your writing habits and become a better writer every time you type.
 
-Key Analysis
+**Key Analysis**
 The moment you paste your essay into CritiqueCounter, our backend engine instantly processes your text through advanced readability algorithms to analyze complexity, flow, and structure:
 
 *Word Count & Goals: Instantly tracks your length to ensure you're hitting your specific target goals.
@@ -12,7 +12,7 @@ The moment you paste your essay into CritiqueCounter, our backend engine instant
 
 *Readability Scoring: Breaks down your text to calculate the exact school grade level of your writing.
 
-Visual Features
+**Visual Features**
 The app turns boring raw data into a beautiful, engaging user interface. The frontend layout features five main sections:
 
 1. The Writing Page
