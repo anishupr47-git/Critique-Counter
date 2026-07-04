@@ -70,7 +70,7 @@ const WorkspaceDashboard = () => {
   }, []);
 
   useEffect(() => {
-    //Render chart only when no active entry is selected
+    //render only when active
     if (!activeEntry && trends.length > 0 && chartRef.current) {
       if (chartInstance.current) {
         chartInstance.current.destroy();
