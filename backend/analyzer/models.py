@@ -59,25 +59,25 @@ class EssayMetricSnapshot(models.Model):
     """Stores the metrics for an essay at a given point in time"""
     essay= models.OneToOneField(Essay, on_delete=models.CASCADE, related_name='metrics')
     
-    # Basic Counts
+    
     word_count= models.PositiveBigIntegerField(default=0)
     sentence_count= models.PositiveBigIntegerField(default=0)
     character_count= models.PositiveBigIntegerField(default=0)
     syllable_count= models.PositiveBigIntegerField(default=0)
 
-    #Readability Scores
+  
     grade_level= models.FloatField(default=0.0)
     reading_ease= models.FloatField(default=0.0)
     vocab_complexity= models.FloatField(default=0.0, help_text="Average syllables per word or similar metric")
     lexical_diversity= models.FloatField(default=0.0, help_text="Unique words / total words")
 
-    # Structural & Stylistic
+   
     cohesion_score= models.FloatField(default=0.0)
     passive_voice_percentage= models.FloatField(default=0.0)
     avg_sentence_length= models.FloatField(default=0.0)
     avg_word_length= models.FloatField(default=0.0)
 
-    #Feeback
+   
     structural_feedback= models.JSONField(default=list, help_text="List of actionable feedback points related to structure")
     overall_score= models.FloatField(default=0.0, help_text="Overall quality score based on combined metrics")
 
